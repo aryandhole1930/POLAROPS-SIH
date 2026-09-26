@@ -17,7 +17,8 @@ from app.database.connection import engine
 app = FastAPI(
     title="PolarOps API",
     description="Integrated Polar Expedition Logistics and Asset Management System",
-    version="1.0.0"
+    version="1.0.0",
+    root_path="/api"
 )
 
 app.add_middleware(
