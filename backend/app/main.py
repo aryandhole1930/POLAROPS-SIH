@@ -18,9 +18,17 @@ app = FastAPI(
     title="PolarOps API",
     description="Integrated Polar Expedition Logistics and Asset Management System",
     version="1.0.0",
-    root_path="/api"
 )
+@app.middleware("http")
+async def strip_api_prefix(request, call_next):
+    path = request.scope["path"]
 
+    if path == "/api":
+        request.scope["path"] = "/"
+    elif path.startswith("/api/"):
+        request.scope["path"] = path[4:]
+
+    return await call_next(request)
 app.add_middleware(
     CORSMiddleware,
    allow_origins=[
